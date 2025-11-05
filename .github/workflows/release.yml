@@ -83,6 +83,8 @@ jobs:
         if: ${{ !matrix.use-docker }}
         env:
           SCCACHE_GHA_ENABLED: "true"
+          CMAKE_C_COMPILER_LAUNCHER: sccache
+          CMAKE_CXX_COMPILER_LAUNCHER: sccache
         run: pnpm build:lief
 
       - name: Prebuildify

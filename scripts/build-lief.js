@@ -41,9 +41,18 @@ const cmakeArgs = [
 // This works both in CI (with SCCACHE_GHA_ENABLED) and locally if sccache is installed
 try {
   execSync('sccache --version', { stdio: 'ignore' });
-  cmakeArgs.push('-DCMAKE_C_COMPILER_LAUNCHER=sccache');
-  cmakeArgs.push('-DCMAKE_CXX_COMPILER_LAUNCHER=sccache');
-  console.log('sccache detected, enabling compiler caching');
+  let sccachePath = 'sccache';
+  // On Windows, we need the full path to sccache to avoid CMake finding other compilers like ccache from Strawberry
+  if (process.platform === 'win32') {
+    try {
+      sccachePath = execSync('where sccache', { encoding: 'utf-8' }).trim().split('\n')[0];
+    } catch (e) {
+      // Fallback to just 'sccache' if where command fails
+    }
+  }
+  cmakeArgs.push(`-DCMAKE_C_COMPILER_LAUNCHER=${sccachePath}`);
+  cmakeArgs.push(`-DCMAKE_CXX_COMPILER_LAUNCHER=${sccachePath}`);
+  console.log(`sccache detected at ${sccachePath}, enabling compiler caching`);
 } catch (e) {
   // sccache not available, continue without it
 }
@@ -56,6 +65,9 @@ if (process.platform === 'darwin') {
 // Add Windows-specific runtime library setting to match node-gyp (/MT)
 if (process.platform === 'win32') {
   cmakeArgs.push('-DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded');
+  // On Windows, disable LIEF's built-in ccache search (which finds Strawberry's ccache)
+  // and rely on CMAKE_*_COMPILER_LAUNCHER variables instead
+  cmakeArgs.push('-DLIEF_USE_CCACHE=OFF');
 }
 
 const configureCmd = `cmake ${cmakeArgs.join(' ')}`;
