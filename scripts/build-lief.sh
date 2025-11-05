@@ -6,42 +6,6 @@ set -e
 BUILD_DIR="lief-build"
 LIEF_SRC="LIEF"
 
-# Initialize submodules if running in GitHub Actions or /usr/workspace exists
-if [ -n "$GITHUB_ACTIONS" ] || [ -d "/usr/workspace" ]; then
-  echo "Running in CI environment, configuring git and initializing submodules..."
-  git config --global --add safe.directory /usr/workspace
-  git config --global --add safe.directory /usr/workspace/LIEF
-  git submodule update --init --recursive
-
-  # Install CMake on Linux if needed
-  if [[ $(uname -s) == "Linux" ]]; then
-    # Detect architecture
-    ARCH=$(uname -m)
-    case "$ARCH" in
-      x86_64)
-        CMAKE_ARCH="x86_64"
-        ;;
-      aarch64|arm64)
-        CMAKE_ARCH="aarch64"
-        ;;
-      *)
-        echo "Unsupported architecture: $ARCH"
-        exit 1
-        ;;
-    esac
-    echo "Detected architecture: $ARCH (CMake: $CMAKE_ARCH)"
-
-    echo "Installing CMake 4.1.2 for $CMAKE_ARCH..."
-    mkdir -p /cmake
-    curl -fsSL https://github.com/Kitware/CMake/releases/download/v4.1.2/cmake-4.1.2-linux-${CMAKE_ARCH}.sh -o install-cmake.sh
-    chmod +x install-cmake.sh
-    ./install-cmake.sh --skip-license --prefix=/cmake
-    rm install-cmake.sh
-    export PATH="/cmake/bin:$PATH"
-    echo "CMake installed to /cmake"
-  fi
-fi
-
 echo "Building LIEF library..."
 
 # Create build directory
