@@ -9,7 +9,6 @@
     "build:lief": "bash scripts/build-lief.sh",
     "clean": "rm -rf build",
     "test": "node test/test.js",
-    "install": "node-gyp-build",
     "prebuildify": "prebuildify --napi --strip --target 18.17.0"
   },
   "dependencies": {
