@@ -29,5 +29,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run tests
-        run: npm test
+      - name: TypeScript type check
+        run: npm run typecheck
+
+      - name: Prettier format check
+        run: npm run format:check

@@ -9,7 +9,10 @@
     "build": "npm run build:lief && node-gyp rebuild",
     "build:lief": "bash scripts/build-lief.sh",
     "clean": "rm -rf build",
-    "prebuildify": "prebuildify --napi --strip --target 18.17.0"
+    "prebuildify": "prebuildify --napi --strip --target 18.17.0",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write \"lib/**/*.{js,ts,d.ts}\" \"src/**/*.{h,cpp}\"",
+    "format:check": "prettier --check \"lib/**/*.{js,ts,d.ts}\" \"src/**/*.{h,cpp}\""
   },
   "dependencies": {
     "node-addon-api": "^8.0.0",
@@ -17,7 +20,9 @@
   },
   "devDependencies": {
     "node-gyp": "^10.0.0",
-    "prebuildify": "^2.11.0"
+    "prebuildify": "^2.11.0",
+    "typescript": "^5.9.3",
+    "prettier": "^3.6.2"
   },
   "keywords": [
     "elf",
