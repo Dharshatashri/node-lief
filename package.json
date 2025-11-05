@@ -5,6 +5,7 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
+    "install": "echo 'Skipping automatic build - use npm run build to build from source'",
     "build": "npm run build:lief && node-gyp rebuild",
     "build:lief": "bash scripts/build-lief.sh",
     "clean": "rm -rf build",
