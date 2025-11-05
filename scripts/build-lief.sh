@@ -6,6 +6,13 @@ set -e
 BUILD_DIR="lief-build"
 LIEF_SRC="LIEF"
 
+# Initialize submodules if running in GitHub Actions
+if [ -n "$GITHUB_ACTIONS" ]; then
+  echo "Running in GitHub Actions, configuring git and initializing submodules..."
+  git config --global --add safe.directory /usr/workspace
+  git submodule update --init --recursive
+fi
+
 echo "Building LIEF library..."
 
 # Create build directory
