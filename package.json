@@ -11,8 +11,8 @@
     "clean": "rm -rf build",
     "prebuildify": "prebuildify --napi --strip --target 18.17.0",
     "typecheck": "tsc --noEmit",
-    "format": "prettier --write \"lib/**/*.{js,ts,d.ts}\" \"src/**/*.{h,cpp}\"",
-    "format:check": "prettier --check \"lib/**/*.{js,ts,d.ts}\" \"src/**/*.{h,cpp}\""
+    "format": "prettier --write \"lib/**/*.{js,ts,d.ts}\"",
+    "format:check": "prettier --check \"lib/**/*.{js,ts,d.ts}\""
   },
   "dependencies": {
     "node-addon-api": "^8.0.0",
