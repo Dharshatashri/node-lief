@@ -120,6 +120,10 @@ jobs:
               pnpm prebuildify
             '
 
+      - name: Fix permissions for cache (musl)
+        if: matrix.use-docker && matrix.platform == 'linux-x64-musl'
+        run: sudo chown -R $(id -u):$(id -g) lief-build prebuilds
+
       - name: Upload prebuilds
         uses: actions/upload-artifact@v4
         with:
@@ -189,7 +193,7 @@ jobs:
         run: ls -lah prebuilds/
 
       - name: Publish to npm
-        run: pnpm publish --access public --provenance
+        run: pnpm publish --access public --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
