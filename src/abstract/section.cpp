@@ -17,7 +17,6 @@ Napi::Object Section::Init(Napi::Env env, Napi::Object exports) {
     InstanceAccessor<&Section::GetVirtualAddress>("virtualAddress"),
     InstanceAccessor<&Section::GetSize, &Section::SetSize>("size"),
     InstanceAccessor<&Section::GetFileOffset>("fileOffset"),
-    InstanceAccessor<&Section::GetVirtualSize, &Section::SetVirtualSize>("virtualSize"),
     InstanceAccessor<&Section::GetContent, &Section::SetContent>("content"),
     InstanceAccessor<&Section::GetOffset>("offset"),
   });
@@ -80,21 +79,6 @@ Napi::Value Section::GetFileOffset(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
   if (!section_) return env.Null();
   return Napi::BigInt::New(env, section_->offset());
-}
-
-Napi::Value Section::GetVirtualSize(const Napi::CallbackInfo& info) {
-  Napi::Env env = info.Env();
-  if (!section_) return env.Null();
-  // The abstract Section class doesn't have virtual_size(), just size()
-  return Napi::BigInt::New(env, section_->size());
-}
-
-void Section::SetVirtualSize(const Napi::CallbackInfo& info, const Napi::Value& value) {
-  if (!section_ || !value.IsBigInt()) return;
-  bool lossless = false;
-  uint64_t new_size = value.As<Napi::BigInt>().Uint64Value(&lossless);
-  // The abstract Section class doesn't have virtual_size(), use size()
-  section_->size(new_size);
 }
 
 Napi::Value Section::GetContent(const Napi::CallbackInfo& info) {

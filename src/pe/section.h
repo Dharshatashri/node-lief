@@ -1,30 +1,30 @@
 #pragma once
 
 #include <napi.h>
-#include <LIEF/Abstract/Section.hpp>
+#include <LIEF/PE.hpp>
 
 namespace node_lief {
 
 /**
- * Wrapper for LIEF::Section
- * Represents a section in a binary with full read/write access
+ * Wrapper for LIEF::PE::Section
+ * PE-specific section with virtualSize support
  */
-class Section : public Napi::ObjectWrap<Section> {
+class PESection : public Napi::ObjectWrap<PESection> {
  public:
   static Napi::Object Init(Napi::Env env, Napi::Object exports);
 
-  // Factory method to create from LIEF section
-  static Napi::Object NewInstance(Napi::Env env, LIEF::Section* section);
+  // Factory method to create from LIEF PE section
+  static Napi::Object NewInstance(Napi::Env env, LIEF::PE::Section* section);
 
   // Get underlying section
-  LIEF::Section* GetSection() const { return section_; }
+  LIEF::PE::Section* GetSection() const { return section_; }
 
   // Constructor (must be public for ObjectWrap)
-  explicit Section(const Napi::CallbackInfo& info);
+  explicit PESection(const Napi::CallbackInfo& info);
 
  private:
 
-  LIEF::Section* section_;
+  LIEF::PE::Section* section_;
 
   // Properties (read-only and read-write)
   Napi::Value GetName(const Napi::CallbackInfo& info);
@@ -33,9 +33,14 @@ class Section : public Napi::ObjectWrap<Section> {
   Napi::Value GetSize(const Napi::CallbackInfo& info);
   void SetSize(const Napi::CallbackInfo& info, const Napi::Value& value);
   Napi::Value GetFileOffset(const Napi::CallbackInfo& info);
+  Napi::Value GetVirtualSize(const Napi::CallbackInfo& info);
+  void SetVirtualSize(const Napi::CallbackInfo& info, const Napi::Value& value);
   Napi::Value GetContent(const Napi::CallbackInfo& info);
   void SetContent(const Napi::CallbackInfo& info, const Napi::Value& value);
   Napi::Value GetOffset(const Napi::CallbackInfo& info);
+
+  // PE-specific properties
+  Napi::Value GetCharacteristics(const Napi::CallbackInfo& info);
 };
 
 } // namespace node_lief

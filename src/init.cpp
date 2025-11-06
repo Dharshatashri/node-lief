@@ -12,6 +12,7 @@
 #include "abstract/symbol.h"
 #include "elf/binary.h"
 #include "pe/binary.h"
+#include "pe/section.h"
 #include "pe/optional_header.h"
 #include "macho/binary.h"
 #include "macho/fat_binary.h"
@@ -60,6 +61,7 @@ Napi::Object Init(Napi::Env env, Napi::Object exports) {
   exports.Set("PE", Napi::Object::New(env));
   auto pe = exports.Get("PE").As<Napi::Object>();
   pe.Set("Binary", PEBinary::Init(env, exports));
+  pe.Set("Section", PESection::Init(env, exports));
   pe.Set("OptionalHeader", OptionalHeader::Init(env, exports));
 
   exports.Set("MachO", Napi::Object::New(env));

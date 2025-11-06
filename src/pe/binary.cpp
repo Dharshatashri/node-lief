@@ -6,7 +6,7 @@
 
 #include "binary.h"
 #include "optional_header.h"
-#include "../abstract/section.h"
+#include "section.h"
 
 namespace node_lief {
 
@@ -81,6 +81,23 @@ PEBinary::PEBinary(const Napi::CallbackInfo& info)
   binary_ = pe_binary_.get();
 }
 
+Napi::Value PEBinary::GetSections(const Napi::CallbackInfo& info) {
+  Napi::Env env = info.Env();
+
+  if (!pe_binary_) {
+    return env.Null();
+  }
+
+  Napi::Array sections_array = Napi::Array::New(env);
+  uint32_t idx = 0;
+
+  for (auto& section : pe_binary_->sections()) {
+    sections_array[idx++] = PESection::NewInstance(env, &section);
+  }
+
+  return sections_array;
+}
+
 Napi::Value PEBinary::GetSection(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
 
@@ -95,7 +112,7 @@ Napi::Value PEBinary::GetSection(const Napi::CallbackInfo& info) {
     return env.Null();
   }
 
-  return Section::NewInstance(env, section);
+  return PESection::NewInstance(env, section);
 }
 
 Napi::Value PEBinary::GetOptionalHeader(const Napi::CallbackInfo& info) {

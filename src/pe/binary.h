@@ -37,10 +37,8 @@ class PEBinary : public Napi::ObjectWrap<PEBinary>, protected BinaryImpl {
     return GetHeaderImpl(info.Env());
   }
 
-  // Abstract methods - forward to BinaryImpl
-  Napi::Value GetSections(const Napi::CallbackInfo& info) {
-    return GetSectionsImpl(info.Env());
-  }
+  // Abstract methods - some forwarded to BinaryImpl, some PE-specific
+  Napi::Value GetSections(const Napi::CallbackInfo& info);
   Napi::Value GetSymbols(const Napi::CallbackInfo& info) {
     return GetSymbolsImpl(info.Env());
   }

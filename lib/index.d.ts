@@ -41,6 +41,8 @@ declare namespace LIEF {
     /**
      * Represents a section in a binary
      * Provides read/write access to section properties and content
+     *
+     * Note: For PE-specific sections with virtualSize support, use PE.Section.
      */
     class Section {
       readonly name: string;
@@ -48,7 +50,6 @@ declare namespace LIEF {
       readonly virtualAddress: bigint;
       size: bigint;
       readonly fileOffset: bigint;
-      virtualSize: bigint;
       /**
        * Section content as a Buffer.
        * Getter returns Buffer. Setter accepts Buffer or number[].
@@ -85,6 +86,18 @@ declare namespace LIEF {
 
   namespace PE {
     /**
+     * PE-specific section class
+     * Provides proper virtualSize support and PE-specific properties
+     */
+    class Section extends Abstract.Section {
+      // PE sections have proper virtual_size support (not just an alias for size)
+      virtualSize: bigint;
+
+      // PE-specific properties
+      readonly characteristics: number;
+    }
+
+    /**
      * PE (Windows Portable Executable) binary class
      * Used for Windows .exe and .dll manipulation
      */
@@ -97,8 +110,11 @@ declare namespace LIEF {
       // PE-specific properties
       readonly optionalHeader: OptionalHeader;
 
+      // Override to return PE-specific sections
+      sections(): Section[];
+
       // PE-specific methods
-      getSection(name: string): Abstract.Section | null;
+      getSection(name: string): Section | null;
     }
 
     /**
