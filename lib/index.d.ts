@@ -80,6 +80,13 @@ declare namespace LIEF {
 
       // Override format type
       readonly format: 'ELF';
+
+      // ELF-specific properties
+      readonly hasOverlay: boolean;
+      /**
+       * Overlay content as a Buffer.
+       */
+      overlay: Buffer;
     }
   }
 
