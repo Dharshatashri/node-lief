@@ -59,7 +59,7 @@ This applies to all exposed APIs across all binary formats (Abstract, PE, ELF, M
 
 ### JavaScript Layer (`lib/`)
 
-- `lib/index.js`: Entry point, loads native addon via node-gyp-build
+- `lib/index.js`: Entry point, loads native addon
 - `lib/index.d.ts`: TypeScript definitions for all APIs
 
 ### Native C++ Layer (`src/`)
