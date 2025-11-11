@@ -25,7 +25,7 @@ class MachOHeader : public Napi::ObjectWrap<MachOHeader> {
  private:
   const LIEF::MachO::Header* header_;
 
-  // Properties (read-only)
+  // MachO-specific properties (read-only)
   Napi::Value GetCpuType(const Napi::CallbackInfo& info);
   Napi::Value GetCpuSubtype(const Napi::CallbackInfo& info);
   Napi::Value GetFileType(const Napi::CallbackInfo& info);
@@ -33,6 +33,8 @@ class MachOHeader : public Napi::ObjectWrap<MachOHeader> {
   Napi::Value GetMagic(const Napi::CallbackInfo& info);
   Napi::Value GetNbCmds(const Napi::CallbackInfo& info);
   Napi::Value GetSizeofCmds(const Napi::CallbackInfo& info);
+  Napi::Value GetIs32Bit(const Napi::CallbackInfo& info);
+  Napi::Value GetIs64Bit(const Napi::CallbackInfo& info);
 };
 
 } // namespace node_lief

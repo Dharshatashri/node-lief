@@ -19,7 +19,7 @@ declare namespace LIEF {
       readonly entrypoint: bigint;
       readonly isPie: boolean;
       readonly hasNx: boolean;
-      readonly header: Header;
+      // Note: header property is format-specific - see ELF.Binary, PE.Binary, MachO.Binary
 
       // Methods
       sections(): Section[];
@@ -29,13 +29,6 @@ declare namespace LIEF {
       getSymbol(name: string): Symbol | null;
       patchAddress(address: bigint | number, patch: Buffer | number[]): void;
       write(outputPath: string): void;
-    }
-
-    interface Header {
-      architecture: number;
-      entrypoint: bigint;
-      is_32: boolean;
-      is_64: boolean;
     }
 
     /**
@@ -188,6 +181,7 @@ declare namespace LIEF {
     /**
      * MachO Header
      * Contains critical metadata about the Mach-O binary
+     * This is a format-specific header, separate from Abstract.Header
      */
     class Header {
       readonly cpuType: number; // CPU_TYPE enum value
@@ -197,6 +191,8 @@ declare namespace LIEF {
       readonly magic: number;
       readonly nbCmds: number;
       readonly sizeofCmds: number;
+      readonly is32Bit: boolean;
+      readonly is64Bit: boolean;
     }
 
     /**
