@@ -49,6 +49,13 @@ jobs:
           - platform: win32-x64
             os: windows-latest
             node: '22.x'
+            msvc_arch: x64
+
+          # Windows ARM64
+          - platform: win32-arm64
+            os: windows-11-arm
+            node: '22.x'
+            msvc_arch: arm64
 
     runs-on: ${{ matrix.os }}
 
@@ -65,10 +72,10 @@ jobs:
           node-version: ${{ matrix.node }}
 
       - name: Setup MSVC
-        if: matrix.platform == 'win32-x64'
+        if: startsWith(matrix.platform, 'win32-')
         uses: ilammy/msvc-dev-cmd@v1
         with:
-          arch: x64
+          arch: ${{ matrix.msvc_arch }}
 
       # Standard build for non-Docker platforms
       - name: Install pnpm
@@ -94,7 +101,7 @@ jobs:
       - name: Build LIEF
         if: ${{ !matrix.use-docker }}
         env:
-          SCCACHE_GHA_ENABLED: "true"
+          SCCACHE_GHA_ENABLED: 'true'
           CMAKE_C_COMPILER_LAUNCHER: sccache
           CMAKE_CXX_COMPILER_LAUNCHER: sccache
         run: pnpm build:lief
@@ -277,13 +284,17 @@ jobs:
           name: prebuilds-win32-x64
           path: prebuilds
 
+      - name: Download Windows ARM64 prebuilds
+        uses: actions/download-artifact@v4
+        with:
+          name: prebuilds-win32-arm64
+          path: prebuilds
+
       - name: List prebuilds
         run: ls -lah prebuilds/
 
       - name: Publish to npm
         run: pnpm publish --access public --no-git-checks
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
