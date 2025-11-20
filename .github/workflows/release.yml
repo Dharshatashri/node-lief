@@ -89,12 +89,13 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Install sccache
-        uses: mozilla-actions/sccache-action@bafd42bd91680affe190f697cac6ef3ad958ecba
+        uses: taiki-e/install-action@sccache
 
       - name: Export GHA cache variables
         uses: actions/github-script@v7
         with:
           script: |
+            core.exportVariable('ACTIONS_CACHE_SERVICE_V2', 'on');
             core.exportVariable('ACTIONS_RESULTS_URL', process.env.ACTIONS_RESULTS_URL || '');
             core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
 
@@ -116,6 +117,7 @@ jobs:
         run: |
           docker run --rm -v "$PWD":/workspace -w /workspace \
             -e SCCACHE_GHA_ENABLED="true" \
+            -e ACTIONS_CACHE_SERVICE_V2="on" \
             -e ACTIONS_RESULTS_URL="${ACTIONS_RESULTS_URL}" \
             -e ACTIONS_RUNTIME_TOKEN="${ACTIONS_RUNTIME_TOKEN}" \
             quay.io/pypa/manylinux_2_28_x86_64 \
@@ -153,6 +155,7 @@ jobs:
         run: |
           docker run --rm -v "$PWD":/workspace -w /workspace \
             -e SCCACHE_GHA_ENABLED="true" \
+            -e ACTIONS_CACHE_SERVICE_V2="on" \
             -e ACTIONS_RESULTS_URL="${ACTIONS_RESULTS_URL}" \
             -e ACTIONS_RUNTIME_TOKEN="${ACTIONS_RUNTIME_TOKEN}" \
             alpine:latest \
@@ -180,6 +183,7 @@ jobs:
         run: |
           docker run --rm -v "$PWD":/workspace -w /workspace \
             -e SCCACHE_GHA_ENABLED="true" \
+            -e ACTIONS_CACHE_SERVICE_V2="on" \
             -e ACTIONS_RESULTS_URL="${ACTIONS_RESULTS_URL}" \
             -e ACTIONS_RUNTIME_TOKEN="${ACTIONS_RUNTIME_TOKEN}" \
             --platform linux/arm64 \
